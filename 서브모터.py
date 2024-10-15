@@ -3,7 +3,7 @@ import time
 import subprocess
 
 # Set the sudo password as a variable for easy updating
-sudo_password = ""
+sudo_password = "1212"
 
 # Function to run shell commands with the sudo password
 def run_command(command):
