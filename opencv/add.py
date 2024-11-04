@@ -9,7 +9,7 @@ cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
 # 비디오 저장 설정 (H.264 코덱 사용)
 fourcc = cv2.VideoWriter_fourcc(*'H264')
-out = cv2.VideoWriter('./mj/output.avi', fourcc, 30.0, (1280, 720))  #저장하고싶은 파일이름으로 변경
+out = cv2.VideoWriter('./mj/output.avi', fourcc, 30.0, (1280, 720))  #저장하고싶은 파일이름으로 변
 
 
 if not cap.isOpened():
