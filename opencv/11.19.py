@@ -98,6 +98,7 @@ class KeyboardHandler:
         self.dc_motor = dc_motor
         self.camera = camera
         self.listener = keyboard.Listener(on_press=self.on_press)
+        #쓰레드 시작
         self.listener.start()
 
     def on_press(self, key):
@@ -134,9 +135,13 @@ def main():
     servo = ServoMotor(pin=33)
     dc_motor = DCMotor(pwm_pin=32, dir_pin1=29, dir_pin2=31)
     camera = CameraRecorder()
+#키보드 입력 작업과 메인스레드 독립적으로 분리하기위해서
+    keyboard_handler = KeyboardHandler(servo, dc_motor, camera) # 쓰레드 생성
 
-    keyboard_handler = KeyboardHandler(servo, dc_motor, camera)
 
+
+
+#메인 스레드에서 종료 대기
     try:
         while True:
             camera.show_feed()
