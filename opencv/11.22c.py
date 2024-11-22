@@ -5,9 +5,20 @@ import cv2
 import keyboard
 import threading
 from datetime import datetime
+import subprocess
+
+# GPIO 핀에서 PWM 기능을 활성화하는 함수
+def enable_pwm_on_pins():
+    # Pin 32 (PWM0) 활성화
+    subprocess.run(["sudo", "busybox", "devmem", "0x700031fc", "32", "0x45"])
+    subprocess.run(["sudo", "busybox", "devmem", "0x6000d504", "32", "0x2"])
+
+    # Pin 33 (PWM2) 활성화
+    subprocess.run(["sudo", "busybox", "devmem", "0x70003248", "32", "0x46"])
+    subprocess.run(["sudo", "busybox", "devmem", "0x6000d100", "32", "0x00"])
 
 # 폴더 생성 (출력 파일 저장 경로)
-output_dir = "./mj"
+output_dir = "./jwj"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
@@ -16,6 +27,9 @@ servo_pin = 33
 dc_motor_pwm_pin = 32  # DC 모터 속도 제어 핀
 dc_motor_dir_pin1 = 29  # DC 모터 방향 제어 핀 1
 dc_motor_dir_pin2 = 31  # DC 모터 방향 제어 핀 2
+
+# PWM을 사용할 핀을 초기화하기 전에 활성화
+enable_pwm_on_pins()
 
 # GPIO 설정
 GPIO.setmode(GPIO.BOARD)
@@ -55,7 +69,7 @@ def set_dc_motor(speed, direction):
 class CameraHandler(threading.Thread):
     def __init__(self):
         super().__init__()
-        self.cap = cv2.VideoCapture(0)
+        self.cap = cv2.VideoCapture(1)
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
         self.recording = False
