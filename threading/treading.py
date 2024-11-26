@@ -1,4 +1,5 @@
 import threading
+#THREAD
 
 #1. rc 자동차 제어 함수
 def control_rc_car():
