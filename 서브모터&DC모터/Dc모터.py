@@ -38,7 +38,7 @@ dc_motor_pwm_pin = 32  # PWM-capable pin for DC motor speed
 dc_motor_dir_pin1 = 29  # Direction control pin 1
 dc_motor_dir_pin2 = 31  # Direction control pin 2
 
-GPIO.setmode(GPIO.BOARD
+# GPIO.setmode(GPIO.BOARD
 GPIO.setup(servo_pin, GPIO.OUT)
 GPIO.setup(dc_motor_pwm_pin, GPIO.OUT)
 GPIO.setup(dc_motor_dir_pin1, GPIO.OUT)

@@ -3,8 +3,8 @@ import cv2
 import numpy as np
 
 # 입력 및 출력 폴더 경로
-input_folder = "C:/Users/USER/Desktop/p/135_degrees"  # 실제 입력 폴더 경로
-output_folder = "C:/Users/USER/Desktop/p/135_degrees_output"  # 출력 폴더 경로
+input_folder = "C:/Users/USER/Desktop/p/45_degrees"  # 실제 입력 폴더 경로
+output_folder = "C:/Users/USER/Desktop/p/45_degrees_output"  # 출력 폴더 경로
 os.makedirs(output_folder, exist_ok=True)
 
 def detect_lane(image):
