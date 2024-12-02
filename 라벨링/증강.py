@@ -3,8 +3,8 @@ from PIL import Image
 from torchvision import transforms
 
 # 입력 및 출력 폴더 설정
-input_folder = "C:/Users/USER/Desktop/p/45_degrees_output"  # 전처리된 이미지 폴더
-output_folder = "C:/Users/USER/Desktop/p/45_degrees_augmented"  # 증강된 이미지 저장 폴더
+input_folder = "C:/Users/USER/Desktop/p/90_degrees_output"  # 전처리된 이미지 폴더
+output_folder = "C:/Users/USER/Desktop/p/90_degrees_augmented"  # 증강된 이미지 저장 폴더
 os.makedirs(output_folder, exist_ok=True)
 
 # 데이터 증강 변환 정의
