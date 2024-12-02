@@ -107,3 +107,5 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, num_epoch
 
 # 모델 훈련 실행
 train_model(model, train_loader, val_loader, criterion, optimizer, num_epochs=10)
+# 모델 훈련 후 저장하기
+torch.save(model.state_dict(), 'trained_model.pth')
