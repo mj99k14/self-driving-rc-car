@@ -9,24 +9,25 @@ import subprocess
 
 # GPIO 핀에서 PWM 기능을 활성화하는 함수
 def enable_pwm_on_pins():
-    # Pin 32 (PWM0) 활성화
     subprocess.run(["sudo", "busybox", "devmem", "0x700031fc", "32", "0x45"])
     subprocess.run(["sudo", "busybox", "devmem", "0x6000d504", "32", "0x2"])
-
-    # Pin 33 (PWM2) 활성화
     subprocess.run(["sudo", "busybox", "devmem", "0x70003248", "32", "0x46"])
     subprocess.run(["sudo", "busybox", "devmem", "0x6000d100", "32", "0x00"])
 
-# 폴더 생성 (출력 파일 저장 경로)
-output_dir = "./mj"
-if not os.path.exists(output_dir):
-    os.makedirs(output_dir)
+# 저장 폴더 생성 함수
+def create_output_folder():
+    base_dir = "./mj"  # 기본 폴더 경로
+    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')  # 현재 시간 기반 폴더명 생성
+    folder_path = os.path.join(base_dir, f"session_{timestamp}")
+    os.makedirs(folder_path, exist_ok=True)  # 폴더 생성
+    print(f"Created output folder: {folder_path}")
+    return folder_path
 
 # GPIO 핀 설정
 servo_pin = 33
-dc_motor_pwm_pin = 32  # DC 모터 속도 제어 핀
-dc_motor_dir_pin1 = 29  # DC 모터 방향 제어 핀 1
-dc_motor_dir_pin2 = 31  # DC 모터 방향 제어 핀 2
+dc_motor_pwm_pin = 32
+dc_motor_dir_pin1 = 29
+dc_motor_dir_pin2 = 31
 
 # PWM을 사용할 핀을 초기화하기 전에 활성화
 enable_pwm_on_pins()
@@ -46,10 +47,10 @@ dc_motor_pwm.start(0)
 
 # 서보 모터 각도 설정 함수
 def set_servo_angle(angle):
-    if angle < 0:
-        angle = 0
-    elif angle > 180:
-        angle = 180
+    if angle < 30:
+        angle = 30
+    elif angle > 150:
+        angle = 150
     duty_cycle = 2 + (angle / 18)
     servo.ChangeDutyCycle(duty_cycle)
     time.sleep(0.1)
@@ -67,14 +68,14 @@ def set_dc_motor(speed, direction):
 
 # 카메라 처리 쓰레드
 class CameraHandler(threading.Thread):
-    def __init__(self):
+    def __init__(self, output_folder):
         super().__init__()
         self.cap = cv2.VideoCapture(1)
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
-        self.recording = False
-        self.out = None
         self.running = True
+        self.frame_count = 0
+        self.output_folder = output_folder
 
     def run(self):
         while self.running:
@@ -85,32 +86,23 @@ class CameraHandler(threading.Thread):
 
             cv2.imshow('Webcam Feed', frame)
 
-            if self.recording and self.out is not None:
-                self.out.write(frame)
+            # 자동으로 사진 저장
+            self.frame_count += 1
+            if self.frame_count % 30 == 0:  # 매 30 프레임마다 저장 (약 1초 간격)
+                self.save_frame(frame)
 
-            # 'q' 키로 종료
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 self.running = False
 
         self.cleanup()
 
-    def start_recording(self):
-        # datetime을 이용한 파일 이름 생성
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        output_file = os.path.join(output_dir, f"output_{timestamp}.avi")
-        self.out = cv2.VideoWriter(output_file, cv2.VideoWriter_fourcc(*'H264'), 30.0, (1280, 720))
-        self.recording = True
-        print(f"Recording started: {output_file}")
-
-    def stop_recording(self):
-        if self.recording and self.out is not None:
-            self.out.release()
-        self.recording = False
-        print("Recording stopped.")
+    def save_frame(self, frame):
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S_%f')[:-3]
+        output_file = os.path.join(self.output_folder, f"frame_{timestamp}.jpg")
+        cv2.imwrite(output_file, frame)
+        print(f"Saved frame: {output_file}")
 
     def cleanup(self):
-        if self.recording and self.out is not None:
-            self.out.release()
         self.cap.release()
         cv2.destroyAllWindows()
 
@@ -124,27 +116,25 @@ class MotorHandler(threading.Thread):
 
     def run(self):
         while self.running:
-            # 서보 모터 제어
             if keyboard.is_pressed('0'):
                 self.servo_angle = 90
                 set_servo_angle(self.servo_angle)
                 print("Servo angle reset to 90 degrees.")
 
             elif keyboard.is_pressed('left'):
-                self.servo_angle -= 5
-                if self.servo_angle < 0:
-                    self.servo_angle = 0
+                self.servo_angle -= 30
+                if self.servo_angle < 30:
+                    self.servo_angle = 30
                 set_servo_angle(self.servo_angle)
                 print(f"Left pressed. Servo angle: {self.servo_angle} degrees")
 
             elif keyboard.is_pressed('right'):
-                self.servo_angle += 5
-                if self.servo_angle > 180:
-                    self.servo_angle = 180
+                self.servo_angle += 30
+                if self.servo_angle > 150:
+                    self.servo_angle = 150
                 set_servo_angle(self.servo_angle)
                 print(f"Right pressed. Servo angle: {self.servo_angle} degrees")
 
-            # DC 모터 제어
             if keyboard.is_pressed('up'):
                 set_dc_motor(50, "forward")
                 print("DC motor moving forward...")
@@ -154,28 +144,27 @@ class MotorHandler(threading.Thread):
             else:
                 set_dc_motor(0, "forward")
 
-            time.sleep(0.1)  # CPU 점유율 방지
+            time.sleep(0.1)
 
     def stop(self):
         self.running = False
 
 # 메인 함수
 def main():
-    camera_handler = CameraHandler()
+    # 자동 생성된 출력 폴더
+    output_folder = create_output_folder()
+
+    # 핸들러 초기화
+    camera_handler = CameraHandler(output_folder)
     motor_handler = MotorHandler()
 
     try:
         camera_handler.start()
         motor_handler.start()
 
-        print("Press 'r' to start/stop recording. Press 'q' to exit.")
+        print("Press 'q' to exit.")
         while camera_handler.running:
-            if keyboard.is_pressed('r'):
-                if camera_handler.recording:
-                    camera_handler.stop_recording()
-                else:
-                    camera_handler.start_recording()
-                time.sleep(0.2)  # 키 입력 중복 방지
+            time.sleep(0.1)
 
     except KeyboardInterrupt:
         print("프로그램 종료 중...")
