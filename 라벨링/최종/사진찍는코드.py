@@ -15,7 +15,7 @@ def enable_pwm_on_pins():
     subprocess.run(["sudo", "busybox", "devmem", "0x6000d100", "32", "0x00"])
 
 # 폴더 생성
-output_dir = "./kmj"
+output_dir = "./"
 folders = {30: os.path.join(output_dir, "30"), 
            60: os.path.join(output_dir, "60"), 
            90: os.path.join(output_dir, "90"), 
