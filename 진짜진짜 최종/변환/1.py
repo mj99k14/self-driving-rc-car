@@ -5,9 +5,13 @@ import csv
 # 데이터 경로 설정
 base_path = "C:/Users/USER/Desktop"  # 바탕화면 기준
 frame_save_path = os.path.join(base_path, "csv")  # 이미지 경로 폴더
-csv_file = os.path.join(base_path, "training_data_cleaned.csv")  # CSV 파일 경로
+csv_file = os.path.join(base_path, "training_data.csv")  # CSV 파일 경로
 
 # CSV 파일 로드
+if not os.path.exists(csv_file):
+    print(f"파일이 존재하지 않습니다: {csv_file}")
+    exit()
+
 with open(csv_file, 'r') as file:
     reader = csv.reader(file)
     data = list(reader)
