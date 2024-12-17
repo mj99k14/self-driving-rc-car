@@ -1,3 +1,4 @@
+
 import os
 import pandas as pd
 
@@ -33,3 +34,4 @@ else:
 updated_csv_path = "C:/Users/USER/Desktop/training_data_cleaned_updated.csv"
 df.to_csv(updated_csv_path, index=False)
 print(f"경로가 수정된 CSV를 {updated_csv_path}에 저장했습니다.")
+

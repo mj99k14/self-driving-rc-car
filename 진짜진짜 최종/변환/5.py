@@ -1,3 +1,4 @@
+
 import cv2
 import os
 
@@ -33,3 +34,8 @@ for filename in os.listdir(input_folder):
         preprocess_image(input_path, output_folder, angle)
 
 print("모든 이미지 전처리가 완료되었습니다.")
+
+
+
+
+

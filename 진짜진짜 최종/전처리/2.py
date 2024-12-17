@@ -3,7 +3,7 @@ import os
 
 # 바탕화면 CSV 폴더 경로
 base_path = "C:/Users/USER/Desktop/csv"
-output_csv_path = "C:/Users/USER/Desktop/training_data_updated.csv"
+output_csv_path = "C:/Users/USER/Desktop/training_data.csv"
 
 # CSV 파일 로드
 df = pd.read_csv(output_csv_path)

@@ -1,3 +1,4 @@
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import cv2
@@ -29,7 +30,7 @@ try:
     current_index = 0
 
     def load_image_and_angle(index):
-        """이미지와 조향각을 로드"""
+        "이미지와 조향각을 로드"
         frame_path, angle = data[index]
         image = cv2.imread(frame_path)
         if image is None:
@@ -71,3 +72,6 @@ except pd.errors.EmptyDataError:
     print(f"CSV 파일이 비어 있습니다: {csv_path}")
 except Exception as e:
     print(f"예기치 않은 오류가 발생했습니다: {e}")
+
+
+
