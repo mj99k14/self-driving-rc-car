@@ -60,10 +60,7 @@
  
 ## 💡 참고 사항
 
-- **필수 의존성**: 이 프로젝트를 실행하려면 필요한 라이브러리를 설치해야 합니다.(`requirements.txt` 참조)  
-- **Jetson Nano 환경 설정**: Jetson Nano에 설치 및 설정하는 방법은 `setup_instructions.md` 파일을 확인하세요.  
+- 프로젝트 관련 문서 및 상세 정보: [Notion 링크](https://www.notion.so/1616393e05fb80369c7ffc839a22c1df?pvs=4) 
 
----
 
-### 참고 문서 (References)
-- 프로젝트 관련 문서 및 상세 정보: [Notion 링크](https://www.notion.so/1616393e05fb80369c7ffc839a22c1df?pvs=4)
+
