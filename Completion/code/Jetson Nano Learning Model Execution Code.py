@@ -13,7 +13,7 @@ subprocess.run(["sudo", "busybox", "devmem", "0x6000d504", "32", "0x2"])
 subprocess.run(["sudo", "busybox", "devmem", "0x70003248", "32", "0x46"])
 subprocess.run(["sudo", "busybox", "devmem", "0x6000d100", "32", "0x00"])
 
-# 큐 생성 (최대 크기 1: 최신 데이터만 유지)
+# 큐 생성 (최대 크기 1: 최신 데이터만 유지) // 1. 첫번쨰 코드가 실행안됬었던 이유 큐 사용 x
 angle_queue = queue.Queue(maxsize=1)
 exit_signal = queue.Queue()  # 종료 신호를 위한 큐
 
@@ -97,7 +97,7 @@ model.eval()
 
 categories = [30, 60, 90, 120, 150]
 
-# 쓰레드 1: DL 예측
+# 쓰레드 1: DL 예측 2. 쓰레드 사용하지않아서 서브모터 안돌아갔음!
 def dl_inference():
     cap = cv2.VideoCapture(0)
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
