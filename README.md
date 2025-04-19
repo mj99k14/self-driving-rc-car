@@ -1,0 +1,11 @@
+# 🚘 자율주행 RC카 시스템
+
+<p align="center">
+  <img src="logo.png" width="300" />
+</p>
+
+이 프로젝트의 README는 다음 언어로 제공됩니다.  
+언어를 선택하세요:
+
+- 🇯🇵 [일본어 (日本語)](README_jp.md)
+- 🇰🇷 [한국어 (한국어)](README_kr.md)
