@@ -28,7 +28,8 @@ CNNベースのディープラーニングモデル（PilotNet）により操舵
 ![デモGIF](./jetson_rc_car_demo.gif)  
 > Jetson Nano によるリアルタイム推論と自動操縦の成功シーン
 
-🔗🔗 [完全版動画を見る（mp4）](https://github.com/mj99k14/self-driving-rc-car/raw/main/KakaoTalk_20241217_204918887.mp4)
+🔗 [完全版動画を見る（mp4）](https://github.com/mj99k14/self-driving-rc-car/raw/main/video/jetson_autopilot_demo.mp4)
+
 
 
 
