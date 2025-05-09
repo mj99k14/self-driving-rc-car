@@ -20,7 +20,8 @@ CNN 기반의 딥러닝 모델로 조향 각도를 예측하여 RC카를 자율�
 > 실제 자율주행에 성공한 결과 영상입니다 (Jetson Nano + 모델 직접 학습)
 
 [![시연 영상](https://img.youtube.com/vi/영상링크ID/0.jpg)](https://github.com/mj99k14/Autonomous-Vehicle-Project/blob/main/KakaoTalk_20241217_204918887.mp4)  
-🔗 영상 파일 직접 보기: [KakaoTalk_20241217_204918887.mp4](https://github.com/mj99k14/Autonomous-Vehicle-Project/blob/main/KakaoTalk_20241217_204918887.mp4)
+🔗 영상 파일 직접 보기:(https://github.com/mj99k14/self-driving-rc-car/raw/main/video/jetson_autopilot_demo.mp4)
+
 
 ---
 
@@ -90,7 +91,6 @@ Autonomous-Vehicle-Project/
 
 ## 📎 기타 참고 자료
 
-- 발표 PPT: [Jetson RC카 발표자료 보기](https://github.com/mj99k14/Autonomous-Vehicle-Project/blob/main/잿슨나노제출.pptx)
 - GitHub 저장소: [프로젝트 코드 보러가기](https://github.com/mj99k14/Autonomous-Vehicle-Project)
 
 ---
