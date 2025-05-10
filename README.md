@@ -113,7 +113,6 @@ self-driving-rc-car/
 │   ├── PilotNet関連スクリプト
 │   ├── 角度分類・前処理・再撮影などのPythonコード
 ```
-```
 
 ---
 
